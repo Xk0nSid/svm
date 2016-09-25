@@ -14,7 +14,7 @@ i32 mapToNumber(string s);
 int main(int argc, char *argv[]) {
     // check for input errors
     if (argc != 2) {
-        cout << "Usage: " << argv[0] << " <filename> " << endl;
+        cout << "Usage: " << argv[0] << " <filename>" << endl;
         exit(1);
     }
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 
     // write to binary file
     ofstream ofile;
-    ofile.open("out.bin", ios::binary);
+    ofile.open("a.sbc", ios::binary);
     
     for (i32 i = 0; i < instructions.size(); i++) {
         ofile.write(reinterpret_cast<char *>(&instructions[i]), sizeof(i32));
@@ -79,7 +79,9 @@ bool isInteger(string s) {
 }
 
 i32 mapToNumber(string s) {
-    if (s == "+" || s == "add") {
+    if (s == "hlt") {
+        return 0x40000000;
+    } else if (s == "+" || s == "add") {
         return 0x40000001;
     } else if (s == "-" || s == "sub") {
         return 0x40000002;
@@ -87,6 +89,10 @@ i32 mapToNumber(string s) {
         return 0x40000003;
     } else if (s == "/" || s == "div") {
         return 0x40000004;
+    } else if (s == "push") {
+        return 0x40000005;
+    } else if (s == "print") {
+        return 0x40000006;
     }
     return -1;
 }

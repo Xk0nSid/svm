@@ -19,7 +19,7 @@ void StackVM::displayMeta() {
               << _SVM_COMPILER_ << " " << _SVM_COMPILER_VERSION_ << " on "
               << _SVM_ARCH_ << " linux." << std::endl
               << "Instruction Set: Primitive" << std::endl
-              << "Set Length: 4" << std::endl
+              << "Set Length: 7" << std::endl
               << "Instruction Size: 32 bit" << std::endl
               << std::endl;
 }
@@ -61,32 +61,47 @@ void StackVM::execute() {
 void StackVM::doPrimitive() {
     switch(this->dat) {
         case 0:     // Halt
+            #if DEBUG == 1
             std::cout << "Halting VM..." << std::endl;
+            #endif
             this->running = 0;
             break;
         case 1:     // Add
+            #if DEBUG == 1
             std::cout << "adding " << this->memory[this->sp -1]
                       << " " << this->memory[this->sp] << std::endl;
+            #endif
             memory[this->sp -1] = this->memory[this->sp -1] + this->memory[this->sp];
             this->sp--;
             break;
         case 2:     // Subtract
+            #if DEBUG == 1
             std::cout << "subtracting " << this->memory[this->sp -1]
                       << " " << this->memory[this->sp] << std::endl;
+            #endif
             memory[this->sp -1] = this->memory[this->sp -1] - this->memory[this->sp];
             this->sp--;
             break;
         case 3:     // Multiply
+            #if DEBUG == 1
             std::cout << "multiply " << this->memory[this->sp -1]
                       << " " << this->memory[this->sp] << std::endl;
+            #endif
             memory[this->sp -1] = this->memory[this->sp -1] * this->memory[this->sp];
             this->sp--;
             break;
         case 4:     // Divide
+            #if DEBUG == 1
             std::cout << "divide " << this->memory[this->sp -1]
                       << " " << this->memory[this->sp] << std::endl;
+            #endif
             memory[this->sp -1] = this->memory[this->sp -1] / this->memory[this->sp];
             this->sp--;
+            break;
+        case 5:     // Push
+            break;
+        case 6:     // Print
+            std::cout << this->memory[this->sp] << std::endl;
             break;
     }
 }
@@ -98,7 +113,9 @@ void StackVM::run() {
         this->fetch();
         this->decode();
         this->execute();
+        #if DEBUG == 1
         std::cout << "tos: " << this->memory[this->sp] << std::endl;
+        #endif
     }
 }
 

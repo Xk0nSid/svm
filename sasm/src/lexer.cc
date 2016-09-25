@@ -93,6 +93,11 @@ strings Lexer::lex(std::string s) {
                     j = 0;
                 }
                 state = START;
+                #if DEBUG == 1
+                if(debug) {
+                  std::cout << "Token: " << lexeme << std::endl;
+                }
+                #endif
                 break;
             case COMMENT:
                 if (s[i] != '\n') {
