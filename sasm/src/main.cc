@@ -79,13 +79,13 @@ bool isInteger(string s) {
 }
 
 i32 mapToNumber(string s) {
-    if (s == "+") {
+    if (s == "+" || s == "add") {
         return 0x40000001;
-    } else if (s == "-") {
+    } else if (s == "-" || s == "sub") {
         return 0x40000002;
-    } else if (s == "*") {
+    } else if (s == "*" || s == "mul") {
         return 0x40000003;
-    } else if (s == "/") {
+    } else if (s == "/" || s == "div") {
         return 0x40000004;
     }
     return -1;
